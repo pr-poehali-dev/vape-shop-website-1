@@ -1,0 +1,33 @@
+{
+  "tests": [
+    {
+      "name": "Get empty cart",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "items": "array",
+        "total": "number",
+        "count": "number"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Add product to cart",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "product_id": 1,
+        "name": "Test Product",
+        "price": 990,
+        "quantity": 1
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "items": "array",
+        "total": "number"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

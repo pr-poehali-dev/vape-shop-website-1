@@ -2,24 +2,43 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
-
-interface Product {
-  id: number;
-  name: string;
-  brand: string;
-  type: string;
-  price: number;
-  nicotine: string;
-  image: string;
-  popular: boolean;
-}
+import { api, Product } from '@/lib/api';
+import { useToast } from '@/hooks/use-toast';
 
 interface HomePageProps {
   products: Product[];
   setActiveSection: (section: string) => void;
+  onCartUpdate?: () => void;
 }
 
-export default function HomePage({ products, setActiveSection }: HomePageProps) {
+export default function HomePage({ products, setActiveSection, onCartUpdate }: HomePageProps) {
+  const { toast } = useToast();
+
+  const handleAddToCart = async (product: Product) => {
+    try {
+      await api.addToCart({
+        product_id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+      });
+      
+      toast({
+        title: 'Товар добавлен в корзину',
+        description: `${product.name} успешно добавлен`,
+      });
+      
+      if (onCartUpdate) {
+        onCartUpdate();
+      }
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось добавить товар в корзину',
+        variant: 'destructive',
+      });
+    }
+  };
   return (
     <>
       <section className="mb-20 text-center">
@@ -67,7 +86,10 @@ export default function HomePage({ products, setActiveSection }: HomePageProps) 
               </CardHeader>
               <CardFooter className="flex justify-between items-center">
                 <span className="text-2xl font-bold gradient-text">{product.price} ₽</span>
-                <Button className="bg-gradient-to-r from-primary to-secondary">
+                <Button 
+                  className="bg-gradient-to-r from-primary to-secondary"
+                  onClick={() => handleAddToCart(product)}
+                >
                   <Icon name="Plus" size={18} className="mr-2" />
                   В корзину
                 </Button>

@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/Header';
 import HomePage from '@/components/HomePage';
 import CatalogPage from '@/components/CatalogPage';
+import CartPage from '@/components/CartPage';
 import Footer from '@/components/Footer';
+import { api } from '@/lib/api';
 
 const products = [
   { id: 1, name: 'ELFBAR 5000', brand: 'ELFBAR', type: 'Одноразовый', price: 990, nicotine: '20 мг', image: '/placeholder.svg', popular: true },
@@ -29,6 +32,20 @@ export default function Index() {
   const [priceRange, setPriceRange] = useState([0, 6000]);
   const [selectedNicotine, setSelectedNicotine] = useState<string>('all');
   const [activeSection, setActiveSection] = useState<string>('home');
+  const [cartCount, setCartCount] = useState(0);
+
+  const updateCartCount = async () => {
+    try {
+      const data = await api.getCart();
+      setCartCount(data.count);
+    } catch (error) {
+      console.error('Failed to load cart count:', error);
+    }
+  };
+
+  useEffect(() => {
+    updateCartCount();
+  }, []);
 
   const filteredProducts = products.filter(product => {
     if (selectedType !== 'all' && product.type !== selectedType) return false;
@@ -44,11 +61,11 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header activeSection={activeSection} setActiveSection={setActiveSection} />
+      <Header activeSection={activeSection} setActiveSection={setActiveSection} cartCount={cartCount} />
 
       <main className="container px-4 py-12">
         {activeSection === 'home' && (
-          <HomePage products={products} setActiveSection={setActiveSection} />
+          <HomePage products={products} setActiveSection={setActiveSection} onCartUpdate={updateCartCount} />
         )}
 
         {activeSection === 'catalog' && (
@@ -66,7 +83,12 @@ export default function Index() {
             brands={brands}
             types={types}
             nicotineLevels={nicotineLevels}
+            onCartUpdate={updateCartCount}
           />
+        )}
+
+        {activeSection === 'cart' && (
+          <CartPage onCartUpdate={updateCartCount} />
         )}
 
         {activeSection === 'about' && (
@@ -327,6 +349,7 @@ export default function Index() {
       </main>
 
       <Footer />
+      <Toaster />
     </div>
   );
 }

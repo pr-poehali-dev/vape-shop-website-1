@@ -1,12 +1,14 @@
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
 
 interface HeaderProps {
   activeSection: string;
   setActiveSection: (section: string) => void;
+  cartCount?: number;
 }
 
-export default function Header({ activeSection, setActiveSection }: HeaderProps) {
+export default function Header({ activeSection, setActiveSection, cartCount = 0 }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="container flex h-16 items-center justify-between px-4">
@@ -26,9 +28,15 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
           <button onClick={() => setActiveSection('contacts')} className="text-sm font-medium hover:text-primary transition-colors">Контакты</button>
         </div>
 
-        <Button className="bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 transition-opacity">
+        <Button 
+          className="bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 transition-opacity relative"
+          onClick={() => setActiveSection('cart')}
+        >
           <Icon name="ShoppingCart" size={18} className="mr-2" />
           Корзина
+          {cartCount > 0 && (
+            <Badge className="ml-2 bg-background text-foreground">{cartCount}</Badge>
+          )}
         </Button>
       </nav>
     </header>
