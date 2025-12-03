@@ -75,7 +75,7 @@ export default function Index() {
             <Card className="bg-card/50 backdrop-blur">
               <CardContent className="pt-6 space-y-4 text-lg leading-relaxed">
                 <p>
-                  <strong>VapeShop</strong> — это современный интернет-магазин электронных сигарет и аксессуаров, 
+                  <strong>Grip Smoke</strong> — это современный интернет-магазин электронных сигарет и аксессуаров, 
                   который работает с 2020 года. Мы предлагаем широкий ассортимент продукции от ведущих мировых производителей.
                 </p>
                 <p>
@@ -244,7 +244,7 @@ export default function Index() {
                     </div>
                     <div>
                       <div className="text-sm text-muted-foreground">Email</div>
-                      <div className="font-semibold">info@vapeshop.ru</div>
+                      <div className="font-semibold">info@gripsmoke.ru</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -275,7 +275,7 @@ export default function Index() {
                 <CardContent className="space-y-3">
                   <Button variant="outline" className="w-full justify-start">
                     <Icon name="MessageCircle" size={20} className="mr-2" />
-                    Telegram: @vapeshop
+                    Telegram: @gripsmoke
                   </Button>
                   <Button variant="outline" className="w-full justify-start">
                     <Icon name="Send" size={20} className="mr-2" />
@@ -283,7 +283,7 @@ export default function Index() {
                   </Button>
                   <Button variant="outline" className="w-full justify-start">
                     <Icon name="Share2" size={20} className="mr-2" />
-                    ВКонтакте: vk.com/vapeshop
+                    ВКонтакте: vk.com/gripsmoke
                   </Button>
                 </CardContent>
               </Card>

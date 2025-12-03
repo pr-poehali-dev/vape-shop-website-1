@@ -14,7 +14,7 @@ export default function Header({ activeSection, setActiveSection }: HeaderProps)
           <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center">
             <Icon name="Cloudy" className="text-white" size={24} />
           </div>
-          <span className="text-2xl font-bold gradient-text">VapeShop</span>
+          <span className="text-2xl font-bold gradient-text">Grip Smoke</span>
         </div>
         
         <div className="hidden md:flex items-center gap-6">

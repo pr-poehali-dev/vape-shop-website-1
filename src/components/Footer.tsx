@@ -10,7 +10,7 @@ export default function Footer() {
               <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center">
                 <Icon name="Cloudy" className="text-white" size={24} />
               </div>
-              <span className="text-xl font-bold gradient-text">VapeShop</span>
+              <span className="text-xl font-bold gradient-text">Grip Smoke</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Современный магазин электронных сигарет с доставкой по всей России
@@ -38,13 +38,13 @@ export default function Footer() {
             <h3 className="font-semibold mb-4">Контакты</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>+7 (495) 123-45-67</li>
-              <li>info@vapeshop.ru</li>
+              <li>info@gripsmoke.ru</li>
               <li>10:00 - 22:00 ежедневно</li>
             </ul>
           </div>
         </div>
         <div className="border-t border-border/40 pt-8 text-center text-sm text-muted-foreground">
-          <p>© 2024 VapeShop. Все права защищены.</p>
+          <p>© 2024 Grip Smoke. Все права защищены.</p>
           <p className="mt-2">Продажа табачной продукции лицам младше 18 лет запрещена.</p>
         </div>
       </div>
