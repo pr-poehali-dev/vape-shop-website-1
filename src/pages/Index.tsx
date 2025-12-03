@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import Header from '@/components/Header';
+import HomePage from '@/components/HomePage';
+import CatalogPage from '@/components/CatalogPage';
+import Footer from '@/components/Footer';
 
 const products = [
   { id: 1, name: 'ELFBAR 5000', brand: 'ELFBAR', type: 'Одноразовый', price: 990, nicotine: '20 мг', image: '/placeholder.svg', popular: true },
@@ -43,243 +44,29 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <nav className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center">
-              <Icon name="Cloudy" className="text-white" size={24} />
-            </div>
-            <span className="text-2xl font-bold gradient-text">VapeShop</span>
-          </div>
-          
-          <div className="hidden md:flex items-center gap-6">
-            <button onClick={() => setActiveSection('home')} className="text-sm font-medium hover:text-primary transition-colors">Главная</button>
-            <button onClick={() => setActiveSection('catalog')} className="text-sm font-medium hover:text-primary transition-colors">Каталог</button>
-            <button onClick={() => setActiveSection('about')} className="text-sm font-medium hover:text-primary transition-colors">О нас</button>
-            <button onClick={() => setActiveSection('delivery')} className="text-sm font-medium hover:text-primary transition-colors">Доставка</button>
-            <button onClick={() => setActiveSection('reviews')} className="text-sm font-medium hover:text-primary transition-colors">Отзывы</button>
-            <button onClick={() => setActiveSection('contacts')} className="text-sm font-medium hover:text-primary transition-colors">Контакты</button>
-          </div>
-
-          <Button className="bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 transition-opacity">
-            <Icon name="ShoppingCart" size={18} className="mr-2" />
-            Корзина
-          </Button>
-        </nav>
-      </header>
+      <Header activeSection={activeSection} setActiveSection={setActiveSection} />
 
       <main className="container px-4 py-12">
         {activeSection === 'home' && (
-          <>
-            <section className="mb-20 text-center">
-              <div className="animate-fade-in">
-                <h1 className="text-5xl md:text-7xl font-black mb-6 gradient-text leading-tight">
-                  Твой Vape —<br />Твой Стиль
-                </h1>
-                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Широкий ассортимент вейпов, жидкостей и аксессуаров от ведущих мировых брендов
-                </p>
-                <div className="flex gap-4 justify-center">
-                  <Button onClick={() => setActiveSection('catalog')} size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg px-8">
-                    Перейти в каталог
-                    <Icon name="ArrowRight" size={20} className="ml-2" />
-                  </Button>
-                  <Button onClick={() => setActiveSection('about')} size="lg" variant="outline" className="text-lg px-8">
-                    Узнать больше
-                  </Button>
-                </div>
-              </div>
-            </section>
-
-            <section className="mb-16">
-              <h2 className="text-3xl font-bold mb-8 text-center">🔥 Популярные товары</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {products.filter(p => p.popular).map((product, idx) => (
-                  <Card key={product.id} className="hover-scale overflow-hidden border-border/50 bg-card/50 backdrop-blur animate-scale-in" style={{ animationDelay: `${idx * 100}ms` }}>
-                    <CardHeader>
-                      <div className="aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                        <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                      </div>
-                      <div className="flex items-center justify-between mb-2">
-                        <Badge className="bg-primary/20 text-primary border-primary/30">
-                          {product.brand}
-                        </Badge>
-                        {product.popular && (
-                          <Badge className="bg-accent/20 text-accent border-accent/30">
-                            <Icon name="Flame" size={14} className="mr-1" />
-                            Хит
-                          </Badge>
-                        )}
-                      </div>
-                      <CardTitle className="text-xl">{product.name}</CardTitle>
-                      <CardDescription>{product.type} • Никотин: {product.nicotine}</CardDescription>
-                    </CardHeader>
-                    <CardFooter className="flex justify-between items-center">
-                      <span className="text-2xl font-bold gradient-text">{product.price} ₽</span>
-                      <Button className="bg-gradient-to-r from-primary to-secondary">
-                        <Icon name="Plus" size={18} className="mr-2" />
-                        В корзину
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
-              </div>
-            </section>
-
-            <section className="mb-16 py-16 px-8 rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 border border-primary/20">
-              <div className="grid md:grid-cols-3 gap-8 text-center">
-                <div className="animate-fade-in">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                    <Icon name="Truck" size={32} className="text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">Быстрая доставка</h3>
-                  <p className="text-muted-foreground">Доставим за 1-3 дня по всей России</p>
-                </div>
-                <div className="animate-fade-in" style={{ animationDelay: '100ms' }}>
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
-                    <Icon name="Shield" size={32} className="text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">Оригинальная продукция</h3>
-                  <p className="text-muted-foreground">Работаем только с проверенными поставщиками</p>
-                </div>
-                <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center">
-                    <Icon name="Headphones" size={32} className="text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">Поддержка 24/7</h3>
-                  <p className="text-muted-foreground">Всегда готовы помочь с выбором</p>
-                </div>
-              </div>
-            </section>
-          </>
+          <HomePage products={products} setActiveSection={setActiveSection} />
         )}
 
         {activeSection === 'catalog' && (
-          <section>
-            <h2 className="text-4xl font-bold mb-8 gradient-text">Каталог товаров</h2>
-            
-            <div className="grid lg:grid-cols-4 gap-8 mb-8">
-              <Card className="lg:col-span-1 h-fit">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Icon name="Filter" size={20} />
-                    Фильтры
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">Тип устройства</label>
-                    <Select value={selectedType} onValueChange={setSelectedType}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Все типы</SelectItem>
-                        {types.filter(t => t !== 'all').map(type => (
-                          <SelectItem key={type} value={type}>{type}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">Бренд</label>
-                    <Select value={selectedBrand} onValueChange={setSelectedBrand}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Все бренды</SelectItem>
-                        {brands.filter(b => b !== 'all').map(brand => (
-                          <SelectItem key={brand} value={brand}>{brand}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">Никотин</label>
-                    <Select value={selectedNicotine} onValueChange={setSelectedNicotine}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Любой</SelectItem>
-                        {nicotineLevels.filter(n => n !== 'all').map(nic => (
-                          <SelectItem key={nic} value={nic}>{nic}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">
-                      Цена: {priceRange[0]} - {priceRange[1]} ₽
-                    </label>
-                    <Slider
-                      min={0}
-                      max={6000}
-                      step={100}
-                      value={priceRange}
-                      onValueChange={setPriceRange}
-                      className="mt-4"
-                    />
-                  </div>
-
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={() => {
-                      setSelectedType('all');
-                      setSelectedBrand('all');
-                      setSelectedNicotine('all');
-                      setPriceRange([0, 6000]);
-                    }}
-                  >
-                    <Icon name="X" size={16} className="mr-2" />
-                    Сбросить фильтры
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <div className="lg:col-span-3">
-                <div className="mb-4 text-muted-foreground">
-                  Найдено товаров: {filteredProducts.length}
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {filteredProducts.map((product) => (
-                    <Card key={product.id} className="hover-scale overflow-hidden border-border/50 bg-card/50 backdrop-blur">
-                      <CardHeader>
-                        <div className="aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                        </div>
-                        <div className="flex items-center justify-between mb-2">
-                          <Badge className="bg-primary/20 text-primary border-primary/30">
-                            {product.brand}
-                          </Badge>
-                          {product.popular && (
-                            <Badge className="bg-accent/20 text-accent border-accent/30">
-                              <Icon name="Flame" size={14} className="mr-1" />
-                              Хит
-                            </Badge>
-                          )}
-                        </div>
-                        <CardTitle className="text-xl">{product.name}</CardTitle>
-                        <CardDescription>{product.type} • Никотин: {product.nicotine}</CardDescription>
-                      </CardHeader>
-                      <CardFooter className="flex justify-between items-center">
-                        <span className="text-2xl font-bold gradient-text">{product.price} ₽</span>
-                        <Button className="bg-gradient-to-r from-primary to-secondary">
-                          <Icon name="Plus" size={18} className="mr-2" />
-                          В корзину
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
+          <CatalogPage
+            products={products}
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
+            selectedBrand={selectedBrand}
+            setSelectedBrand={setSelectedBrand}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            selectedNicotine={selectedNicotine}
+            setSelectedNicotine={setSelectedNicotine}
+            filteredProducts={filteredProducts}
+            brands={brands}
+            types={types}
+            nicotineLevels={nicotineLevels}
+          />
         )}
 
         {activeSection === 'about' && (
@@ -539,53 +326,7 @@ export default function Index() {
         )}
       </main>
 
-      <footer className="border-t border-border/40 mt-20 py-12 bg-card/30">
-        <div className="container px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary via-secondary to-accent flex items-center justify-center">
-                  <Icon name="Cloudy" className="text-white" size={24} />
-                </div>
-                <span className="text-xl font-bold gradient-text">VapeShop</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Современный магазин электронных сигарет с доставкой по всей России
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Каталог</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>Одноразовые вейпы</li>
-                <li>Под-системы</li>
-                <li>Моды и баки</li>
-                <li>Жидкости</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Информация</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>О компании</li>
-                <li>Доставка и оплата</li>
-                <li>Возврат товара</li>
-                <li>Гарантии</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Контакты</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>+7 (495) 123-45-67</li>
-                <li>info@vapeshop.ru</li>
-                <li>10:00 - 22:00 ежедневно</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-border/40 pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2024 VapeShop. Все права защищены.</p>
-            <p className="mt-2">Продажа табачной продукции лицам младше 18 лет запрещена.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
